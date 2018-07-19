@@ -1,8 +1,8 @@
 var internalNS = '.imademo';
-var vm, contentLoadTime_1, contentStartTime_1, contentLoadTime_2, contentStartTime_2, contentLoadTime_3, contentStartTime_3;
-var latency1 = -1,
-  latency2 = -1,
-  latency3 = -1
+
+var vm;
+var playerTiming = {};
+
 
 var uvpc = {
     "classes": [
@@ -152,9 +152,10 @@ function onVideoManagerReady(systemInfo) {
         ns = '.myVideoContainer';
 
     var playerOptions = {
-      enableUnmutedAutoplay: systemInfo.supportsUnmutedAutoplay,
-      enableMutedAutoplay: systemInfo.supportsMutedAutoplay
-    }
+        enableUnmutedAutoplay: systemInfo.supportsUnmutedAutoplay,
+        enableMutedAutoplay: systemInfo.supportsMutedAutoplay
+    };
+
 
     var videoPlayerArray = [
         ['myVideoContainer_1', onVideoPlayerReady.bind(this), playerOptions],
@@ -163,16 +164,17 @@ function onVideoManagerReady(systemInfo) {
     ];
 
     vm.createMultipleVideoPlayers(videoPlayerArray);
-    vm.addEventListener(et.VIDEO_PROGRESS + ns, onVideoProgress.bind(this));
+    // vm.addEventListener(et.VIDEO_PROGRESS + ns, onVideoProgress.bind(this));
     vm.addEventListener(et.VIDEO_STATE_CHANGE + ns, onVideoStateChange.bind(this));
 }
 
-function onContentLoad_1(evtObj){ contentLoadTime_1 = Date.now(); }
-function onContentStart_1(evtObj){ contentStartTime_1 = Date.now(); }
-function onContentLoad_2(evtObj){ contentLoadTime_2 = Date.now(); }
-function onContentStart_2(evtObj){ contentStartTime_2 = Date.now(); }
-function onContentLoad_3(evtObj){ contentLoadTime_3 = Date.now(); }
-function onContentStart_3(evtObj){ contentStartTime_3 = Date.now(); }
+function onContentLoad(evtObj){
+    playerTiming[evtObj.target] = { loadTime: Date.now()};
+}
+function onContentStart(evtObj){
+    playerTiming[evtObj.target].startTime = Date.now();
+    ractive.set('startup_' + evtObj.target, playerTiming[evtObj.target].startTime - playerTiming[evtObj.target].loadTime);
+}
 
 function onVideoManagerError(errorMessage) {
     console.log('Video manager error.', errorMessage);
@@ -195,7 +197,7 @@ var resourceConfigObjs = {
       type: uvpjs.mediaCapabilities.RP_URL,
       isLive: true,
       assetURL: 'https://liveheroes.global.ssl.fastly.net/liveheroes-test3/primary/primary.m3u8', // 1
-      liveSyncDurationCount: 3
+      liveSyncDurationCount: 3,
     },
 };
 
@@ -205,51 +207,30 @@ function onVideoPlayerReady(videoPlayer) {
   // Add the current video player instance to the players object.
   myVideoPlayer = videoPlayer;
 
+  myVideoPlayer.addEventListener(uvpjs.EventType.CONTENT_DATA_LOADED + '.' + containerID, onContentLoad.bind(this));
+  myVideoPlayer.addEventListener(uvpjs.EventType.CONTENT_START + '.' + containerID, onContentStart.bind(this));
+  myVideoPlayer.addEventListener(uvpjs.EventType.VIDEO_PROGRESS + '.' + containerID, onVideoProgress.bind(this));
+
   // Pass the Resource Config Objects and play the video.
   myVideoPlayer.loadAndPlayResource(resourceConfigObjs[containerID]);
-
-  myVideoPlayer.addEventListener(uvpjs.EventType.CONTENT_DATA_LOADED + '.myVideoContainer_1', onContentLoad_1.bind(this));
-  myVideoPlayer.addEventListener(uvpjs.EventType.CONTENT_START + '.myVideoContainer_1', onContentStart_1.bind(this));
-  myVideoPlayer.addEventListener(uvpjs.EventType.CONTENT_DATA_LOADED + '.myVideoContainer_2', onContentLoad_2.bind(this));
-  myVideoPlayer.addEventListener(uvpjs.EventType.CONTENT_START + '.myVideoContainer_2', onContentStart_2.bind(this));
-  myVideoPlayer.addEventListener(uvpjs.EventType.CONTENT_DATA_LOADED + '.myVideoContainer_3', onContentLoad_3.bind(this));
-  myVideoPlayer.addEventListener(uvpjs.EventType.CONTENT_START + '.myVideoContainer_3', onContentStart_3.bind(this));
 }
 
 function onVideoProgress (evtObj) {
-    var player_1 = evtObj.payload;
-    var player_2 = vm.getVideoPlayers().myVideoContainer_2;
-    var player_3 = vm.getVideoPlayers().myVideoContainer_3;
+    var player = vm.getVideoPlayers()[evtObj.target];
+    var facadeState = player.getCurrentPlaybackState().facadeState;
 
-    ractive.set('currentBitrate_1', player_1.facadeState.currentBitrate);
-    ractive.set('currentBitrate_2', player_2.getCurrentPlaybackState().facadeState.currentBitrate);
-    ractive.set('currentBitrate_3', player_3.getCurrentPlaybackState().facadeState.currentBitrate);
+    //Bitrate
+    var bitrate = Number(Math.round((facadeState.currentBitrate/ 1000000) + 'e2')+'e-2');
+    ractive.set('currentBitrate_' + evtObj.target, bitrate);
 
     // Buffer Length
-    var bufferL_1 = document.getElementsByTagName('video')[0].buffered.end(0) - document.getElementsByTagName('video')[0].currentTime;
-    var bufferL_2 = document.getElementsByTagName('video')[1].buffered.end(0) - document.getElementsByTagName('video')[1].currentTime;
-    var bufferL_3 = document.getElementsByTagName('video')[2].buffered.end(0) - document.getElementsByTagName('video')[2].currentTime;
-
-    ractive.set('bufferLength_1', Math.trunc(bufferL_1));
-    ractive.set('bufferLength_2', Math.trunc(bufferL_2));
-    ractive.set('bufferLength_3', Math.trunc(bufferL_3));
+    var videoElem = document.getElementById('video_' + player.getVidContId());
+    var bufferL = Number(Math.round((videoElem.buffered.end(0) - videoElem.currentTime) + 'e2')+'e-2');
+    ractive.set('bufferLength_' + evtObj.target, bufferL);
 
     // Latency
-    var latency_1 = Date.now() - player_1.facadeState.player.streamController.fragPlaying.programDateTime;
-    var latency_2 = Date.now() - player_2.getCurrentPlaybackState().facadeState.player.streamController.fragPlaying.programDateTime;
-    var latency_3 = Date.now() - player_3.getCurrentPlaybackState().facadeState.player.streamController.fragPlaying.programDateTime;
-
-    ractive.set('date_1', latency_1/1000);
-    ractive.set('date_2', latency_2/1000);
-    ractive.set('date_3', latency_3/1000);
-
-    ractive.set('startup_1', contentStartTime_1 - contentLoadTime_1);
-    ractive.set('startup_2', contentStartTime_2 - contentLoadTime_2);
-    ractive.set('startup_3', contentStartTime_3 - contentLoadTime_3);
-
-    latency1 = latency_1/1000;
-    latency2 = latency_2/1000;
-    latency3 = latency_3/1000;
+    var latency = Date.now() - facadeState.player.streamController.fragPlaying.programDateTime;
+    ractive.set('latency_' + evtObj.target, latency/1000);
 }
 
 function onVideoStateChange (evtObj) {
