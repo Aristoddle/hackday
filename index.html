@@ -8,7 +8,7 @@
   <!-- JS SCRIPTS such as CBSI-PLAYER build of your choice (2.7 +) -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.9.3/lodash.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/ractive/0.7.3/ractive.min.js"></script>
-  <script src="//vidtech.cbsinteractive.com/uvpjs/2.8.2/CBSI-PLAYER-dash.js"></script>
+  <script src="//vidtech.cbsinteractive.com/uvpjs/2.8.4/CBSI-PLAYER.js"></script>
 </head>
 
 <body onload="loadPlayer();">
@@ -32,20 +32,20 @@
             <div id="myVideoContainer_1" class="videoContainer"></div>
             <div class="stats">
               <div class="data">
-                <div class="column-left">Latency (s):</div>
-                <div class="column-right">{{ date_1 }}</div>
+                <div class="column-left">Latency(s):</div>
+                <div class="column-right">{{ latency_myVideoContainer_1 }}</div>
               </div>
               <div class="data">
-                <div class="column-left">Startup Time:</div>
-                <div class="column-right">{{ startup_1 }}</div>
+                <div class="column-left">Startup Time(s):</div>
+                <div class="column-right">{{ startup_myVideoContainer_1 }}</div>
               </div>
               <div class="data">
-                <div class="column-left">Current Bitrate:</div>
-                <div class="column-right">{{ currentBitrate_1 }}</div>
+                <div class="column-left">Current Bitrate(Mbit):</div>
+                <div class="column-right">{{ currentBitrate_myVideoContainer_1 }}</div>
               </div>
               <div class="data">
-                <div class="column-left">Buffer Length:</div>
-                <div class="column-right">{{ bufferLength_1 }}</div>
+                <div class="column-left">Buffer Length(s):</div>
+                <div class="column-right">{{ bufferLength_myVideoContainer_1 }}</div>
               </div>
             </div>
           </div>
@@ -53,20 +53,20 @@
             <div id="myVideoContainer_2" class="videoContainer"></div>
             <div class="stats">
               <div class="data">
-                <div class="column-left">Latency (s):</div>
-                <div class="column-right">{{ date_2 }}</div>
+                <div class="column-left">Latency(s):</div>
+                <div class="column-right">{{ latency_myVideoContainer_2 }}</div>
               </div>
               <div class="data">
-                <div class="column-left">Startup Time:</div>
-                <div class="column-right">{{ startup_2 }}</div>
+                <div class="column-left">Startup Time(s):</div>
+                <div class="column-right">{{ startup_myVideoContainer_2 }}</div>
               </div>
               <div class="data">
-                <div class="column-left">Current Bitrate:</div>
-                <div class="column-right">{{ currentBitrate_2 }}</div>
+                <div class="column-left">Current Bitrate(Mbit):</div>
+                <div class="column-right">{{ currentBitrate_myVideoContainer_2 }}</div>
               </div>
               <div class="data">
-                <div class="column-left">Buffer Length:</div>
-                <div class="column-right">{{ bufferLength_2 }}</div>
+                <div class="column-left">Buffer Length(s):</div>
+                <div class="column-right">{{ bufferLength_myVideoContainer_2 }}</div>
               </div>
             </div>
           </div>
@@ -74,20 +74,20 @@
             <div id="myVideoContainer_3" class="videoContainer"></div>
             <div class="stats">
               <div class="data">
-                <div class="column-left">Latency (s):</div>
-                <div class="column-right">{{ date_3 }}</div>
+                <div class="column-left">Latency(s):</div>
+                <div class="column-right">{{ latency_myVideoContainer_3 }}</div>
               </div>
               <div class="data">
-                <div class="column-left">Startup Time:</div>
-                <div class="column-right">{{ startup_3 }}</div>
+                <div class="column-left">Startup Time(s):</div>
+                <div class="column-right">{{ startup_myVideoContainer_3 }}</div>
               </div>
               <div class="data">
-                <div class="column-left">Current Bitrate:</div>
-                <div class="column-right">{{ currentBitrate_3 }}</div>
+                <div class="column-left">Current Bitrate(Mbit):</div>
+                <div class="column-right">{{ currentBitrate_myVideoContainer_3 }}</div>
               </div>
               <div class="data">
-                <div class="column-left">Buffer Length:</div>
-                <div class="column-right">{{ bufferLength_3 }}</div>
+                <div class="column-left">Buffer Length(s):</div>
+                <div class="column-right">{{ bufferLength_myVideoContainer_3 }}</div>
               </div>
             </div>
           </div>
