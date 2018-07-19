@@ -152,10 +152,16 @@ function onVideoManagerReady(systemInfo) {
     vm = myVideoManager;
     var et = uvpjs.EventType;
 
+    
     var playerOptions = {
         enableUnmutedAutoplay: systemInfo.supportsUnmutedAutoplay,
         enableMutedAutoplay: systemInfo.supportsMutedAutoplay
     };
+
+    // var playerOptions = {
+    //     enableUnmutedAutoplay: false,
+    //     enableMutedAutoplay: false
+    // };
 
 
     var videoPlayerArray = [
