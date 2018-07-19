@@ -49,6 +49,7 @@ header div {
     text-align: center;
     padding-left: 10%;
     padding-right: 10%;
+
 }
 
 #data{
@@ -72,7 +73,7 @@ header div {
 
   height: 225px;
   width: 100%;
-  display: block;
+  display: inline-block;
 }
 
 .stats {
