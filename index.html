@@ -1,101 +1,184 @@
 <!doctype html>
 <html>
 <head>
-  <title>UVPJS Test Page</title>
+  <title>LiveHeroes JS Hackday</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="css/styles.css">
 
   <!-- JS SCRIPTS such as CBSI-PLAYER build of your choice (2.7 +) -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.9.3/lodash.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/ractive/0.7.3/ractive.min.js"></script>
-  <script src="//vidtech.cbsinteractive.com/uvpjs/2.8.2/CBSI-PLAYER-dash.js"></script>
+
+  <!-- Epoch -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="node_modules/epoch-charting/dist/js/epoch.js"></script>
+  <link rel="stylesheet" type="text/css" href="node_modules/epoch-charting/dist/css/epoch.min.css">
+
+  <script src="//vidtech.cbsinteractive.com/uvpjs/2.8.4/CBSI-PLAYER.js"></script>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
 </head>
 
 <body onload="loadPlayer();">
-  <div class="container">
-    <div class="row">
-      <header>
-        <div class="title">
-          <h2>
-            <img src="assets/logo.png" />
-            <strong>CBSi</strong>
-            <span>VTG:</span>
-            Fuck Yeah JS Hackday
-          </h2>
-        </div>
-      </header>
-    </div> <!-- .row -->
 
-      <div id="data">
-        <script id="template" type="text/html">
-          <div id="left">
-            <div id="myVideoContainer_1" class="videoContainer"></div>
-            <div class="stats">
-              <div class="data">
-                <div class="column-left">Latency (s):</div>
-                <div class="column-right">{{ date_1 }}</div>
-              </div>
-              <div class="data">
-                <div class="column-left">Startup Time:</div>
-                <div class="column-right">{{ startup_1 }}</div>
-              </div>
-              <div class="data">
-                <div class="column-left">Current Bitrate:</div>
-                <div class="column-right">{{ currentBitrate_1 }}</div>
-              </div>
-              <div class="data">
-                <div class="column-left">Buffer Length:</div>
-                <div class="column-right">{{ bufferLength_1 }}</div>
-              </div>
-            </div>
-          </div>
-          <div id="right">
-            <div id="myVideoContainer_2" class="videoContainer"></div>
-            <div class="stats">
-              <div class="data">
-                <div class="column-left">Latency (s):</div>
-                <div class="column-right">{{ date_2 }}</div>
-              </div>
-              <div class="data">
-                <div class="column-left">Startup Time:</div>
-                <div class="column-right">{{ startup_2 }}</div>
-              </div>
-              <div class="data">
-                <div class="column-left">Current Bitrate:</div>
-                <div class="column-right">{{ currentBitrate_2 }}</div>
-              </div>
-              <div class="data">
-                <div class="column-left">Buffer Length:</div>
-                <div class="column-right">{{ bufferLength_2 }}</div>
-              </div>
-            </div>
-          </div>
-          <div id="center">
-            <div id="myVideoContainer_3" class="videoContainer"></div>
-            <div class="stats">
-              <div class="data">
-                <div class="column-left">Latency (s):</div>
-                <div class="column-right">{{ date_3 }}</div>
-              </div>
-              <div class="data">
-                <div class="column-left">Startup Time:</div>
-                <div class="column-right">{{ startup_3 }}</div>
-              </div>
-              <div class="data">
-                <div class="column-left">Current Bitrate:</div>
-                <div class="column-right">{{ currentBitrate_3 }}</div>
-              </div>
-              <div class="data">
-                <div class="column-left">Buffer Length:</div>
-                <div class="column-right">{{ bufferLength_3 }}</div>
-              </div>
-            </div>
-          </div>
-        </script>
-      </div> <!-- .data -->
-  </div> <!-- .container -->
 
-  <script src="js/player.js"></script>
+<div class="wrapper">
+  <div class="container-fluid">
+    <header>
+      <div class="title">
+        <h2>
+          LiveHeroes JS Hackday
+        </h2>
+      </div>
+    </header>
+
+    <div id="data">
+      <script id="template" type="text/html">
+          <div class="row" style="margin-top: 50px; margin-bottom: 100px">
+            <div id="lineChart" class="epoch category10" style="width: 1600px; height: 400px"></div>
+            <div class="legend">
+              <ul>
+                <li id="blue"><p>10s</p></li>
+                <li id="orange"><p>6s</p></li>
+                <li id="green"><p>4s</p></li>
+                <li id="red"><p>2s</p></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card mb-4 box-shadow">
+                <div class="card-header border-secondary" style="background-color: #0c70fc">10 second segment</div>
+                <div class="card-body">
+
+                  <div class="card-text">
+                    <div class="data">
+                      <div class="column-left">Latency(s):</div>
+                      <div class="column-right">{{ latency_myVideoContainer_1 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Startup Time(s):</div>
+                      <div class="column-right">{{ startup_myVideoContainer_1 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Bitrate(Mbit):</div>
+                      <div class="column-right">{{ currentBitrate_myVideoContainer_1 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Buffer Length(s):</div>
+                      <div class="column-right">{{ bufferLength_myVideoContainer_1 }}</div>
+                    </div>
+                  </div>
+
+                </div>
+                <div id="myVideoContainer_1" class="videoContainer"></div>
+
+
+
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card mb-4 box-shadow">
+                <div class="card-header border-secondary" style="background-color:  #f1800c">6 second segment</div>
+                <div class="card-body">
+
+                  <div class="card-text">
+                    <div class="data">
+                      <div class="column-left">Latency(s):</div>
+                      <div class="column-right">{{ latency_myVideoContainer_2 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Startup Time(s):</div>
+                      <div class="column-right">{{ startup_myVideoContainer_2 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Bitrate(Mbit):</div>
+                      <div class="column-right">{{ currentBitrate_myVideoContainer_2 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Buffer Length(s):</div>
+                      <div class="column-right">{{ bufferLength_myVideoContainer_2 }}</div>
+                    </div>
+                  </div>
+
+                </div>
+                <div id="myVideoContainer_2" class="videoContainer"></div>
+
+
+
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card mb-4 box-shadow">
+                <div id="myVideoContainer_3" class="videoContainer"></div>
+
+                <div class="card-body">
+
+                  <div class="card-text">
+                    <div class="data">
+                      <div class="column-left">Latency(s):</div>
+                      <div class="column-right">{{ latency_myVideoContainer_3 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Startup Time(s):</div>
+                      <div class="column-right">{{ startup_myVideoContainer_3 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Bitrate(Mbit):</div>
+                      <div class="column-right">{{ currentBitrate_myVideoContainer_3 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Buffer Length(s):</div>
+                      <div class="column-right">{{ bufferLength_myVideoContainer_3 }}</div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="card-footer border-secondary" style="background-color: #0a8a1f">4 second segment</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card mb-4 box-shadow">
+                <div id="myVideoContainer_4" class="videoContainer"></div>
+
+                <div class="card-body">
+
+                  <div class="card-text">
+                    <div class="data">
+                      <div class="column-left">Latency(s):</div>
+                      <div class="column-right">{{ latency_myVideoContainer_4 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Startup Time(s):</div>
+                      <div class="column-right">{{ startup_myVideoContainer_4 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Bitrate(Mbit):</div>
+                      <div class="column-right">{{ currentBitrate_myVideoContainer_4 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Buffer Length(s):</div>
+                      <div class="column-right">{{ bufferLength_myVideoContainer_4 }}</div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="card-footer border-secondary" style="background-color: #d62828">2 second segment</div>
+              </div>
+            </div>
+
+          </div>
+      </script>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="js/player.js"></script>
+<script src="js/graph.js"></script>
 
 </body>
 </html>
