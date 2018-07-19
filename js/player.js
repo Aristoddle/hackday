@@ -130,7 +130,7 @@ ractive = new Ractive({
 }),
 myVideoManager, myVideoPlayer;
 
-var latencies = [0, 0, 0];
+var latencies = [0, 0, 0, 0];
 
 function loadPlayer() {
     var sessionOptions = {
@@ -150,8 +150,7 @@ function loadPlayer() {
 
 function onVideoManagerReady(systemInfo) {
     vm = myVideoManager;
-    var et = uvpjs.EventType,
-        ns = '.myVideoContainer';
+    var et = uvpjs.EventType;
 
     var playerOptions = {
         enableUnmutedAutoplay: systemInfo.supportsUnmutedAutoplay,
@@ -162,12 +161,11 @@ function onVideoManagerReady(systemInfo) {
     var videoPlayerArray = [
         ['myVideoContainer_1', onVideoPlayerReady.bind(this), playerOptions],
         ['myVideoContainer_2', onVideoPlayerReady.bind(this), playerOptions],
-        ['myVideoContainer_3', onVideoPlayerReady.bind(this), playerOptions]
+        ['myVideoContainer_3', onVideoPlayerReady.bind(this), playerOptions],
+        ['myVideoContainer_4', onVideoPlayerReady.bind(this), playerOptions]
     ];
 
     vm.createMultipleVideoPlayers(videoPlayerArray);
-    // vm.addEventListener(et.VIDEO_PROGRESS + ns, onVideoProgress.bind(this));
-    vm.addEventListener(et.VIDEO_STATE_CHANGE + ns, onVideoStateChange.bind(this));
 }
 
 function onContentLoad(evtObj){
@@ -186,21 +184,27 @@ var resourceConfigObjs = {
     'myVideoContainer_1': {
       type: uvpjs.mediaCapabilities.RP_URL,
       isLive: true,
-      assetURL: 'https://liveheroes.global.ssl.fastly.net/liveheroes-test1/primary/primary.m3u8', // 10
+      assetURL: 'https://liveheroes.global.ssl.fastly.net/liveheroes-10sec/primary/primary.m3u8', // 10
       liveSyncDurationCount: 3
     },
     'myVideoContainer_2': {
       type: uvpjs.mediaCapabilities.RP_URL,
       isLive: true,
-      assetURL: 'https://liveheroes.global.ssl.fastly.net/liveheroes-test2/primary/primary.m3u8', // 2
+      assetURL: 'https://liveheroes.global.ssl.fastly.net/liveheroes-6sec/primary/primary.m3u8', // 2
       liveSyncDurationCount: 3
     },
     'myVideoContainer_3': {
       type: uvpjs.mediaCapabilities.RP_URL,
       isLive: true,
-      assetURL: 'https://liveheroes.global.ssl.fastly.net/liveheroes-test3/primary/primary.m3u8', // 1
+      assetURL: 'https://liveheroes.global.ssl.fastly.net/liveheroes-4sec/primary/primary.m3u8', // 1
       liveSyncDurationCount: 3,
     },
+    'myVideoContainer_4': {
+        type: uvpjs.mediaCapabilities.RP_URL,
+        isLive: true,
+        assetURL: 'https://liveheroes.global.ssl.fastly.net/liveheroes-2sec/primary/primary.m3u8', // 1
+        liveSyncDurationCount: 3,
+      },
 };
 
 function onVideoPlayerReady(videoPlayer) {
@@ -242,10 +246,4 @@ function onVideoProgress (evtObj) {
 
     updateLatencies(evtObj.target, latency)
     //appendDataPoint(evtObj.target, Date.now(),latency)
-}
-
-function onVideoStateChange (evtObj) {
-    ractive.set({
-        playbackState: evtObj.payload.newState
-    });
 }

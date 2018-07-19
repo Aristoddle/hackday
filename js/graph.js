@@ -13,6 +13,11 @@ var initialChartData = [
   {
     label: "Series 3",
     values: [ ]
+  },
+
+  {
+    label: "Series 4",
+    values: [ ]
   }
 ];
 
@@ -26,8 +31,9 @@ var lineChart = $('#lineChart').epoch({
 setInterval(function() {
   var now = Date.now()
   var newDataPoint = [ {'time': now, 'y': latencies[0]},
-                      {'time': now, 'y': latencies[1]},
-                      {'time': now, 'y': latencies[2]} ]
+                       {'time': now, 'y': latencies[1]},
+                       {'time': now, 'y': latencies[2]},
+                       {'time': now, 'y': latencies[3]}  ]
   lineChart.push(newDataPoint)
 }, 500)
 
