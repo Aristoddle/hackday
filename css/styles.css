@@ -61,13 +61,18 @@ header div {
 #center{float:left; width:500px;}
 
 .videoContainer {
-  width: 436px;
+  /* width: 436px;
   padding-left: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
   display: inline-block;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-              0 6px 20px 0 rgba(0, 0, 0, 0.19);
+              0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+
+
+  height: 225px;
+  width: 100%;
+  display: block;
 }
 
 .stats {

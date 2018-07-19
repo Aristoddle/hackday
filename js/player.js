@@ -130,6 +130,8 @@ ractive = new Ractive({
 }),
 myVideoManager, myVideoPlayer;
 
+var latencies = [0, 0, 0];
+
 function loadPlayer() {
     var sessionOptions = {
         skin: true, // = default
@@ -215,6 +217,11 @@ function onVideoPlayerReady(videoPlayer) {
   myVideoPlayer.loadAndPlayResource(resourceConfigObjs[containerID]);
 }
 
+function updateLatencies(playerName, latency) {
+  var lineId = parseInt(playerName.split("_").pop()) - 1;
+  latencies[lineId] = latency;
+}
+
 function onVideoProgress (evtObj) {
     var player = vm.getVideoPlayers()[evtObj.target];
     var facadeState = player.getCurrentPlaybackState().facadeState;
@@ -230,7 +237,11 @@ function onVideoProgress (evtObj) {
 
     // Latency
     var latency = Date.now() - facadeState.player.streamController.fragPlaying.programDateTime;
-    ractive.set('latency_' + evtObj.target, latency/1000);
+    latency = Number(Math.round((latency/1000) + 'e2')+'e-2')
+    ractive.set('latency_' + evtObj.target, latency);
+
+    updateLatencies(evtObj.target, latency)
+    //appendDataPoint(evtObj.target, Date.now(),latency)
 }
 
 function onVideoStateChange (evtObj) {
