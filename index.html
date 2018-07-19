@@ -9,22 +9,26 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.9.3/lodash.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/ractive/0.7.3/ractive.min.js"></script>
   <script src="//vidtech.cbsinteractive.com/uvpjs/2.8.2/CBSI-PLAYER-dash.js"></script>
+
+  <!-- Epoch -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="node_modules/epoch-charting/dist/js/epoch.js"></script>
+  <link rel="stylesheet" type="text/css" href="node_modules/epoch-charting/dist/css/epoch.min.css">
+
+
+
 </head>
 
 <body onload="loadPlayer();">
   <div class="container">
-    <div class="row">
       <header>
         <div class="title">
           <h2>
-            <img src="assets/logo.png" />
-            <strong>CBSi</strong>
-            <span>VTG:</span>
             Fuck Yeah JS Hackday
           </h2>
         </div>
       </header>
-    </div> <!-- .row -->
 
       <div id="data">
         <script id="template" type="text/html">
@@ -93,9 +97,44 @@
           </div>
         </script>
       </div> <!-- .data -->
+      <div class="container">
+        <div id="lineChart" class="epoch category10" style="width: 800px; height: 200px"></div>
+      </div>
   </div> <!-- .container -->
 
   <script src="js/player.js"></script>
+
+  <script type="text/javascript">
+    var lineChartData = [
+      // First series
+      {
+        label: "Series 1",
+        values: [ {time: 1370044800, y: 100}, {time: 1370044801, y: 1000}, {time: 1370044802, y: 1000}, {time: 1370044803, y: 1000}, {time: 1370044804, y: 1000} ]
+      },
+
+      // The second series
+      {
+        label: "Series 2",
+        values: [ {time: 1370044800, y: 78}, {time: 1370044801, y: 98}, {time: 1370045802, y: 98}, {time: 1370046803, y: 98}, {time: 1370047804, y: 98} ]
+      }
+    ];
+
+    function appendDataPoint(lineData, time, latency) {
+      lineData.values.push({"time":time , "y": latency})
+    }
+
+    setInterval(function() {
+      appendDataPoint(lineChartData[0], 0, window.latency1)
+    }, 1000)
+    // setInterval(function()
+    //   {console.error(window.latency1)}, 1000);
+
+    $('#lineChart').epoch({
+      type: 'time.line',
+      data: lineChartData,
+      axes: ['left', 'right', 'bottom']
+    });
+  </script>
 
 </body>
 </html>

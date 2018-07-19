@@ -1,5 +1,8 @@
 var internalNS = '.imademo';
 var vm, contentLoadTime_1, contentStartTime_1, contentLoadTime_2, contentStartTime_2, contentLoadTime_3, contentStartTime_3;
+var latency1 = -1,
+  latency2 = -1,
+  latency3 = -1
 
 var uvpc = {
     "classes": [
@@ -80,7 +83,7 @@ var uvpc = {
         {
             category: 'internal',
             name: 'UVPJSDebug',
-            enabled: true,
+            enabled: false,
             params: [
                 {name: 'showAll', value: true},
                 {name: 'SkinManager', value: false},
@@ -143,16 +146,22 @@ function loadPlayer() {
     myVideoManager.initialize(sessionOptions, onVideoManagerReady, onVideoManagerError);
 }
 
-function onVideoManagerReady() {
+function onVideoManagerReady(systemInfo) {
     vm = myVideoManager;
     var et = uvpjs.EventType,
         ns = '.myVideoContainer';
 
+    var playerOptions = {
+      enableUnmutedAutoplay: systemInfo.supportsUnmutedAutoplay,
+      enableMutedAutoplay: systemInfo.supportsMutedAutoplay
+    }
+
     var videoPlayerArray = [
-        ['myVideoContainer_1', onVideoPlayerReady.bind(this)],
-        ['myVideoContainer_2', onVideoPlayerReady.bind(this)],
-        ['myVideoContainer_3', onVideoPlayerReady.bind(this)]
+        ['myVideoContainer_1', onVideoPlayerReady.bind(this), playerOptions],
+        ['myVideoContainer_2', onVideoPlayerReady.bind(this), playerOptions],
+        ['myVideoContainer_3', onVideoPlayerReady.bind(this), playerOptions]
     ];
+
     vm.createMultipleVideoPlayers(videoPlayerArray);
     vm.addEventListener(et.VIDEO_PROGRESS + ns, onVideoProgress.bind(this));
     vm.addEventListener(et.VIDEO_STATE_CHANGE + ns, onVideoStateChange.bind(this));
@@ -237,6 +246,10 @@ function onVideoProgress (evtObj) {
     ractive.set('startup_1', contentStartTime_1 - contentLoadTime_1);
     ractive.set('startup_2', contentStartTime_2 - contentLoadTime_2);
     ractive.set('startup_3', contentStartTime_3 - contentLoadTime_3);
+
+    latency1 = latency_1/1000;
+    latency2 = latency_2/1000;
+    latency3 = latency_3/1000;
 }
 
 function onVideoStateChange (evtObj) {

@@ -34,25 +34,11 @@ header div {
   color: #221F1F;
 }
 
-header div img {
-  position: absolute;
-  top: 0px;
-  width: 30px;
-  height: 30px;
-  left: 0;
-}
-
 .title h2 {
   font-family: 'Roboto', Sans-Serif;
   font-weight: 300;
-  font-size: 32px;
-}
-
-.title h2 span {
-  color: #19a0de;
-  margin-left: 10px;
-  margin-right: 10px;
-  font-weight: 500;
+  font-size: 48px;
+  text-align: center;
 }
 
 /* -----------------------------------------
@@ -62,7 +48,7 @@ header div img {
     width: 100%;
     text-align: center;
     padding-left: 10%;
-    padding-right: 10%
+    padding-right: 10%;
 }
 
 #data{
