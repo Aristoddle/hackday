@@ -47,9 +47,14 @@ header div {
 .container {
     width: 100%;
     text-align: center;
-    padding-left: 10%;
-    padding-right: 10%;
+    /* padding-left: 10%;
+    padding-right: 10%; */
 
+}
+
+.wrapper {
+  width: 70%;
+  margin: 0 auto;
 }
 
 #data{
@@ -76,6 +81,14 @@ header div {
   display: inline-block;
 }
 
+
+
+.card-body {
+  background-color: #f5f5f5;
+
+
+}
+
 .stats {
   width: 480px;
   background-color: #f5f5f5;
@@ -95,7 +108,8 @@ header div {
   width: 100%;
   display: flex;
   line-height: 2em;
-  font-size: 2.1em;
+  font-size: 1.3em;
+  margin-left: 17%;
 }
 .data > div { flex: 1; }
 

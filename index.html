@@ -23,6 +23,7 @@
 <body onload="loadPlayer();">
 
 
+<div class="wrapper">
   <div class="container-fluid">
     <header>
       <div class="title">
@@ -31,11 +32,15 @@
         </h2>
       </div>
     </header>
-    
+
     <div id="data">
       <script id="template" type="text/html">
           <div class="row">
-            <div class="col-md-4">
+            <div id="lineChart" class="epoch category10" style="width: 1600px; height: 400px"></div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
               <div class="card mb-4 box-shadow">
                 <div id="myVideoContainer_1" class="videoContainer"></div>
 
@@ -66,7 +71,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
               <div class="card mb-4 box-shadow">
                 <div id="myVideoContainer_2" class="videoContainer"></div>
 
@@ -97,7 +102,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
               <div class="card mb-4 box-shadow">
                 <div id="myVideoContainer_3" class="videoContainer"></div>
 
@@ -128,11 +133,43 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-6">
+              <div class="card mb-4 box-shadow">
+                <div id="myVideoContainer_4" class="videoContainer"></div>
+
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+
+                  </p>
+
+                  <div class="card-text">
+                    <div class="data">
+                      <div class="column-left">Latency(s):</div>
+                      <div class="column-right">{{ latency_myVideoContainer_4 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Startup Time(s):</div>
+                      <div class="column-right">{{ startup_myVideoContainer_4 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Bitrate(Mbit):</div>
+                      <div class="column-right">{{ currentBitrate_myVideoContainer_4 }}</div>
+                    </div>
+                    <div class="data">
+                      <div class="column-left">Buffer Length(s):</div>
+                      <div class="column-right">{{ bufferLength_myVideoContainer_4 }}</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
 
           </div>
       </script>
     </div>
   </div>
+</div>
 
 
 
