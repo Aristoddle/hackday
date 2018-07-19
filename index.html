@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>UVPJS Test Page</title>
+  <title>LiveHeroes JS Hackday</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="css/styles.css">
 
@@ -35,27 +35,22 @@
 
     <div id="data">
       <script id="template" type="text/html">
-          <div class="row" style="margin-top: 100px">
-            <div id="lineChart" class="epoch category10" style="width: 1600px; height: 500px"></div>
-          </div>
-          <div class="row" style="margin-top: 30px; margin-bottom: 100px;">
-            <div class="card" style="margin: 0 auto;">
-              <h5 class="card-header bg-secondary">Legend</h5>
-              <div class="card-body">
-                <h3><span class="badge badge-primary">8s buffer</span>
-                <span class="badge badge-warning">8s buffer</span>
-                <span class="badge badge-success">8s buffer</span>
-                <span class="badge badge-danger">8s buffer</span></h3>
-              </div>
+          <div class="row" style="margin-top: 50px; margin-bottom: 100px">
+            <div id="lineChart" class="epoch category10" style="width: 1600px; height: 400px"></div>
+            <div class="legend">
+              <ul>
+                <li id="blue"><p>10s</p></li>
+                <li id="orange"><p>6s</p></li>
+                <li id="green"><p>4s</p></li>
+                <li id="red"><p>2s</p></li>
+              </ul>
             </div>
-
-
           </div>
 
           <div class="row">
             <div class="col-md-6">
               <div class="card mb-4 box-shadow">
-                <div class="card-header border-secondary" style="background-color: #6699ff">8s buffer</div>
+                <div class="card-header border-secondary" style="background-color: #0c70fc">10 second segment</div>
                 <div class="card-body">
 
                   <div class="card-text">
@@ -86,7 +81,7 @@
             </div>
             <div class="col-md-6">
               <div class="card mb-4 box-shadow">
-                <div class="card-header border-secondary" style="background-color:  #ffb84d">8s buffer</div>
+                <div class="card-header border-secondary" style="background-color:  #f1800c">6 second segment</div>
                 <div class="card-body">
 
                   <div class="card-text">
@@ -141,7 +136,7 @@
                   </div>
 
                 </div>
-                <div class="card-footer border-secondary" style="background-color: #339933">8s buffer</div>
+                <div class="card-footer border-secondary" style="background-color: #0a8a1f">4 second segment</div>
               </div>
             </div>
             <div class="col-md-6">
@@ -170,7 +165,7 @@
                   </div>
 
                 </div>
-                <div class="card-footer border-secondary" style="background-color: #b24953">8s buffer</div>
+                <div class="card-footer border-secondary" style="background-color: #d62828">2 second segment</div>
               </div>
             </div>
 

@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 @import url('https://fonts.googleapis.com/css?family=Oxygen:300,400');
-/*@import "compass/css3";*/
 
 html{ min-height:100%; position:relative; }
 
@@ -11,7 +10,6 @@ body {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   padding-left: 30px;
-  /* background: #EAECE5; */
   background: #f2f0e6 !important;
 
 }
@@ -43,15 +41,48 @@ header div {
   margin-top: 50px;
 }
 
+.legend {
+  float: right;
+  width: 95%;
+  margin-top: -1px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    float: right;
+}
+
+li {
+    float: right;
+}
+
+#blue {background: #0c70fc;}
+#green {background: #0a8a1f;}
+#orange {background: #f1800c;}
+#red {background: #d62828;}
+
+li p {
+    display: block;
+    color: white;
+    text-align: center;
+    height: 16px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 3px;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
 /* -----------------------------------------
      Main Data
 ------------------------------------------- */
 .container {
     width: 100%;
     text-align: center;
-    /* padding-left: 10%;
-    padding-right: 10%; */
-
 }
 
 .wrapper {
@@ -69,31 +100,24 @@ header div {
 #center{float:left; width:500px;}
 
 .videoContainer {
-  /* width: 436px;
-  padding-left: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  display: inline-block;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-              0 6px 20px 0 rgba(0, 0, 0, 0.19); */
-
-
   height: 225px;
   width: 100%;
   display: inline-block;
 }
 
+.card {
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.16), 0 4px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
 
 .card-body {
   background-color: #f5f5f5;
-
-
 }
-
 
 .card-footer, .card-header {
   font-size: 1.3em;
+  line-height: 1em;
   color: white;
+  letter-spacing: 2px;
   text-align: center;
 }
 
@@ -117,7 +141,7 @@ header div {
   display: flex;
   line-height: 2em;
   font-size: 1.2em;
-  margin-left: 17%;
+  margin-left: 20%;
 }
 .data > div { flex: 1; }
 

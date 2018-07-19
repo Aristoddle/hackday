@@ -152,16 +152,12 @@ function onVideoManagerReady(systemInfo) {
     vm = myVideoManager;
     var et = uvpjs.EventType;
 
-    
+
     var playerOptions = {
         enableUnmutedAutoplay: systemInfo.supportsUnmutedAutoplay,
         enableMutedAutoplay: systemInfo.supportsMutedAutoplay
     };
 
-    // var playerOptions = {
-    //     enableUnmutedAutoplay: false,
-    //     enableMutedAutoplay: false
-    // };
 
 
     var videoPlayerArray = [
@@ -179,7 +175,7 @@ function onContentLoad(evtObj){
 }
 function onContentStart(evtObj){
     playerTiming[evtObj.target].startTime = Date.now();
-    ractive.set('startup_' + evtObj.target, playerTiming[evtObj.target].startTime - playerTiming[evtObj.target].loadTime);
+    ractive.set('startup_' + evtObj.target, (playerTiming[evtObj.target].startTime - playerTiming[evtObj.target].loadTime)/1000);
 }
 
 function onVideoManagerError(errorMessage) {
